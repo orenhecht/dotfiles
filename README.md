@@ -1,1 +1,2 @@
-echo # dotfiles
+# dotfiles
+neovim & vim-plug
