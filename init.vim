@@ -8,8 +8,8 @@ scriptencoding utf-8
 "
 "
 " auto download plug-vim
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+if empty(glob('~/.config/nvim/autoload/plug.vim'))
+  silent !curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
@@ -17,7 +17,7 @@ endif
 """""""""""""
 """plugins"""
 """""""""""""
-call plug#begin('~/.local/share/nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'google/vim-maktaba'
 
@@ -42,13 +42,28 @@ augroup autoformat_settings
   autocmd FileType python AutoFormatBuffer autopep8
 augroup END
 
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+
+let g:LanguageClient_serverCommands = {
+    \ 'python': ['pyls'],
+    \ }
+
+" Automatically start language servers.
+let g:LanguageClient_autoStart = 1
+
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
 "auto complete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-set completeopt+=noselect
+"set completeopt+=noselect
 let g:deoplete#enable_at_startup = 1
-Plug 'zchee/deoplete-jedi'
+"Plug 'zchee/deoplete-jedi'
 " close preview window after select
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+"autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+"
+Plug 'Shougo/echodoc.vim'
 
 " lint
 Plug 'neomake/neomake'
@@ -212,8 +227,23 @@ set expandtab
 set smartindent
 
 "Default to 3 spaces per tab
-set tabstop=2
-set softtabstop=2
-set shiftwidth=2
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+set hidden
+
+" Change numbering in insert mode
+augroup set_linenumbers_on_enter_and_leave
+   au!
+   autocmd FocusLost * :set number
+   autocmd InsertEnter * :set number
+
+   autocmd FocusGained * :set relativenumber
+   autocmd InsertLeave * :set relativenumber
+augroup END
 
 colorscheme onedark
