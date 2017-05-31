@@ -32,22 +32,14 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Dark powered asynchronous unite all interfaces for Neovim/Vim8
 Plug 'Shougo/denite.nvim'
 
-" Language Server Protocol (LSP) support for neovim
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
-    \'python' : [$HOME .'/.virtualenvs/nvim3/bin/pyls']
-    \ }
+" display tags in a window, ordered by scope
+Plug 'majutsushi/tagbar'
+let g:tagbar_autofocus = 0
+" auto open tagbar when opening a tagged file
+" does the same as taglist.vim's TlistOpen.
+autocmd VimEnter * nested :call tagbar#autoopen(1)
 
-command! GoToDefinition :call LanguageClient_textDocument_definition()
-command! Hover :call LanguageClient_textDocument_hover()
-command! Rename :call LanguageClient_textDocument_rename()
-command! BSymbols :call LanguageClient_textDocument_documentSymbol()
-command! BReferences :call LanguageClient_textDocument_references()
-command! PSymbols :call LanguageClient_workspace_symbol()
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-
+Plug 'craigemery/vim-autotag'
 
 Plug 'google/vim-maktaba'
 
@@ -76,6 +68,13 @@ nnoremap <leader>ct :CtrlSFToggle<cr>
 
 Plug 'troydm/zoomwintab.vim'
 nnoremap <leader>z :ZoomWinTabToggle<cr>
+
+Plug 'janko-m/vim-test'
+nmap <silent> <leader>tf :TestFile<CR>
+nmap <silent> <leader>ts :TestSuite<CR>
+nmap <silent> <leader>tl :TestLast<CR>
+nmap <silent> <leader>tn :TestNearest<CR>
+nmap <silent> <leader>tv :TestVisit<CR>
 
 " lint
 Plug 'neomake/neomake'
@@ -154,9 +153,25 @@ let g:loaded_netrwPlugin=1
 "thus making NERDTree respect gitignore!
 let g:NERDTreeRespectWildIgnore=1
 
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+" --files: List files that would be searched but do not search
+" --hidden: Search hidden files and folders
+" --follow: Follow symlinks
+" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+
 Plug 'gcmt/wildfire.vim'
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
+
+Plug 'zhou13/vim-easyescape'
+let g:easyescape_chars = { "j": 1, "k": 1 }
+let g:easyescape_timeout = 100
+cnoremap jk <ESC>
+cnoremap kj <ESC>
+
 
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
@@ -171,7 +186,15 @@ Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-unimpaired'
+Plug 'dbakker/vim-projectroot'
+
 call plug#end()
+"
+" put the tags file in the git directory
+let g:autotagTagsFile = projectroot#guess() .'/.git/tags'
+"make sure fzf files run in the right directory
+nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
+
 
 """""""""""""""
 """functions"""
@@ -202,6 +225,12 @@ nnoremap <silent> ∆ :wincmd j<cr>
 nnoremap <silent> ˚ :wincmd k<cr>
 nnoremap <silent> ˙ :wincmd h<cr>
 nnoremap <silent> ¬ :wincmd l<cr>
+
+" do not automatically wrap on load
+set nowrap
+
+" do not automatically wrap text when typing
+set formatoptions-=t
 
 " add column indicator
 set textwidth=80
