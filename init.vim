@@ -15,6 +15,9 @@ if empty(glob('~/.config/nvim/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+
+" ================ Plugins ================
+
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'roxma/nvim-completion-manager' " Fast, Extensible, Async Completion Framework for Neovim
@@ -52,10 +55,11 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
-Plug 'nathanaelkane/vim-indent-guides'
 Plug 'tpope/vim-unimpaired'
 Plug 'dbakker/vim-projectroot'
 Plug 'duff/vim-bufonly'
+Plug 'tmux-plugins/vim-tmux'
+Plug 'christoomey/vim-tmux-navigator'
 
 call plug#end()
 call glaive#Install()
@@ -89,17 +93,28 @@ noremap <Down> :echo 'use j!'<cr>
 noremap <Left> :echo 'use h!'<cr>
 noremap <Right> :echo 'use l!'<cr>
 
-nnoremap <C-Up> :wincmd +<cr>
-nnoremap <C-Down> :wincmd -<cr>
-nnoremap <C-Left> :wincmd <<cr>
-nnoremap <C-Right> :wincmd ><cr>
+nnoremap ˚ :wincmd +<cr>
+nnoremap ∆ :wincmd -<cr>
+nnoremap ˙ :wincmd <<cr>
+nnoremap ¬ :wincmd ><cr>
 
-nnoremap <silent> ∆ :wincmd j<cr>
-nnoremap <silent> ˚ :wincmd k<cr>
-nnoremap <silent> ˙ :wincmd h<cr>
-nnoremap <silent> ¬ :wincmd l<cr>
+nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
+
+" Save
+inoremap <C-s>     <C-O>:update<cr>
+nnoremap <C-s>     :update<cr>
+nnoremap <leader>s :update<cr>
+nnoremap <leader>w :update<cr>
+
+" Quit
+inoremap <C-Q>     <esc>:q<cr>
+nnoremap <C-Q>     :q<cr>
+vnoremap <C-Q>     <esc>
+nnoremap <Leader>q :q<cr>
+nnoremap <Leader>Q :qa!<cr>
 
 nnoremap <c-f> :CtrlSF<Space>
+nmap <leader>f <Plug>CtrlSFCwordPath
 nnoremap <leader>cf :CtrlSFToggle<cr>
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
@@ -137,9 +152,6 @@ cnoremap kj <ESC>
 
 "make sure fzf files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
-
-nmap <silent> <C-k> <Plug>(ale_previous_wrap)
-nmap <silent> <C-j> <Plug>(ale_next_wrap)
 
 " Comment map
 nmap <Leader>c gcc
@@ -228,25 +240,11 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 
 Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/nvim3/bin/yapf'`
 
-" === vim-codefmt ===
-augroup autoformat_settings
-  au!
-  autocmd FileType bzl AutoFormatBuffer buildifier
-  autocmd FileType c,cpp,proto,javascript AutoFormatBuffer clang-format
-  autocmd FileType dart AutoFormatBuffer dartfmt
-  autocmd FileType go AutoFormatBuffer gofmt
-  autocmd FileType gn AutoFormatBuffer gn
-  autocmd FileType html,css,json AutoFormatBuffer js-beautify
-  autocmd FileType java AutoFormatBuffer google-java-format
-  autocmd FileType python AutoFormatBuffer yapf
- augroup END
-
 " === ale ===
-let g:ale_python_flake8_executable = $HOME .'/.virtualenvs/nvim3/bin/flake8'
+let g:ale_python_pylint_executable = $HOME .'/.virtualenvs/nvim3/bin/pylint'
 let g:ale_linters = {
-\   'python': ['flake8'],
+\   'python': ['pylint'],
 \}
-let g:ale_sign_column_always = 1
 let g:ale_open_list = 1
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
@@ -259,16 +257,13 @@ let g:airline_theme='onedark'
 " === rainbow ===
 let g:rainbow_active = 1
 
-" === rainbow ===
-augroup better_whitespace
-   au!
-   let g:better_whitespace_filetypes_blacklist=['diff',
-            \'gitcommit',
-            \'unite',
-            \'qf',
-            \'help']
-   autocmd BufEnter * EnableStripWhitespaceOnSave
- augroup END
+" === vim-better-whitespaces ===
+let g:better_whitespace_filetypes_blacklist=['diff',
+         \'gitcommit',
+         \'unite',
+         \'qf',
+         \'help']
+autocmd BufEnter * EnableStripWhitespaceOnSave
 
 " === NERDTree ===
 augroup nerdtree
@@ -302,3 +297,9 @@ let g:easyescape_timeout = 100
 " === autotag ===
 " put the tags file in the git directory
 let g:autotagTagsFile = projectroot#guess() .'/.git/tags'
+
+
+let g:ctrlsf_mapping = {
+	\ "next": "n",
+	\ "prev": "N",
+	\ }

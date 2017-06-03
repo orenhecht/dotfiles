@@ -1,2 +1,5 @@
 # dotfiles
-neovim & vim-plug
+- neovim & vim-plug
+- tmux & tpm
+- ctags
+- bash_profile
