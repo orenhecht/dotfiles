@@ -156,6 +156,8 @@ nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 " Comment map
 nmap <Leader>c gcc
 
+nnoremap <leader>rr :FormatCode<CR>
+
 " ================ Other Settings ================
 
 " do not automatically wrap on load
