@@ -150,18 +150,40 @@ vmap <C-SPACE> <Plug>(wildfire-water)
 cnoremap jk <ESC>
 cnoremap kj <ESC>
 
-"make sure fzf files run in the right directory
+" make sure fzf files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
 
 " Comment map
 nmap <Leader>c gcc
 
 nnoremap <leader>rr :FormatCode<CR>
+nnoremap <leader>l :lopen<CR>
+
+" Fugitive
+nmap <silent> <leader>gs :Gstatus<cr>
+nmap <leader>ge :Gedit<cr>
+nmap <silent><leader>gr :Gread<cr>
+nmap <silent><leader>gb :Gblame<cr>
+
+" Textmate style indentation
+vmap <leader>[ <gv
+vmap <leader>] >gv
+nmap <leader>[ <<
+nmap <leader>] >>
 
 " ================ Other Settings ================
 
 " do not automatically wrap on load
 set nowrap
+
+set list
+set listchars=tab:»\ ,extends:›,precedes:‹,nbsp:·,trail:·
+
+" " code folding settings
+set foldmethod=indent       " fold based on indent
+set foldnestmax=10          " deepest fold is 10 levels
+set nofoldenable            " don't fold by default
+set foldlevel=1
 
 " do not automatically wrap text when typing
 set formatoptions-=t
@@ -224,6 +246,9 @@ augroup END
 
 set noshowmode
 
+set splitright
+set splitbelow
+
 colorscheme onedark
 
 " ================ Plugins Config ================
@@ -247,9 +272,10 @@ let g:ale_python_pylint_executable = $HOME .'/.virtualenvs/nvim3/bin/pylint'
 let g:ale_linters = {
 \   'python': ['pylint'],
 \}
-let g:ale_open_list = 1
+let g:ale_open_list = 0
 let g:ale_sign_error = '✖'
 let g:ale_sign_warning = '⚠'
+let g:ale_lint_on_text_changed = 'never'
 
 " === vim-airline ===
 let g:airline_powerline_fonts = 1
