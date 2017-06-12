@@ -72,3 +72,6 @@ alias cdg="cd ~/git"
 alias cdd="cd ~/git/dotfiles"
 
 alias tm="~/.scripts/tm.sh"
+
+alias pudb="python -m pudb.run"
+alias pudb3="python3 -m pudb.run"
