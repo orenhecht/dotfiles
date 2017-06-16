@@ -7,8 +7,15 @@ source /usr/local/bin/virtualenvwrapper.sh
 alias mkvirtualenv3="mkvirtualenv --python=\`which python3\`"
 
 # bash-completion
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-  . $(brew --prefix)/etc/bash_completion
+if [ "$(uname)" == "Darwin" ]; then
+    if [ -f $(brew --prefix)/etc/bash_completion ]; then
+      . $(brew --prefix)/etc/bash_completion
+    fi
+else
+    if [ -f /usr/share/bash-completion/bash_completion ]; then
+        . /usr/share/bash-completion/bash_completion
+        . /usr/share/bash-completion/completions/git
+    fi
 fi
 
 # fzf shell extension

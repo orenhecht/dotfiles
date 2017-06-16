@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # credits to https://github.com/nicknisi
 
