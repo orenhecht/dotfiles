@@ -35,3 +35,7 @@
 
 [core]
 	editor = nvim
+[mergetool "fugitive"]
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
