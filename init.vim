@@ -249,6 +249,8 @@ set noshowmode
 set splitright
 set splitbelow
 
+set diffopt+=vertical
+
 colorscheme onedark
 
 " ================ Plugins Config ================

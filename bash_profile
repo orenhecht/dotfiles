@@ -58,6 +58,10 @@ function md() {
     mkdir -p "$@" && cd "$@"
 }
 
+function docker-enter() {
+    docker exec -it $1 bash
+}
+
 
 # ===================== Aliases =====================
 
