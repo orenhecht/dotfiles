@@ -1,6 +1,6 @@
 " Inspired by https://github.com/odedlaz/dotfiles
-let g:python_host_prog = $HOME .'/.virtualenvs/nvim2/bin/python'
-let g:python3_host_prog = $HOME .'/.virtualenvs/nvim3/bin/python'
+" let g:python_host_prog = $HOME .'/.virtualenvs/nvim2/bin/python'
+" let g:python3_host_prog = $HOME .'/.virtualenvs/nvim3/bin/python'
 let g:mapleader = ","
 
 setglobal encoding=utf-8
@@ -94,10 +94,10 @@ noremap <Down> :echo 'use j!'<cr>
 noremap <Left> :echo 'use h!'<cr>
 noremap <Right> :echo 'use l!'<cr>
 
-nnoremap ˚ :wincmd +<cr>
-nnoremap ∆ :wincmd -<cr>
-nnoremap ˙ :wincmd <<cr>
-nnoremap ¬ :wincmd ><cr>
+nnoremap <C-Up> :wincmd +<cr>
+nnoremap <C-Down> :wincmd -<cr>
+nnoremap <C-Left> :wincmd <<cr>
+nnoremap <C-Right> :wincmd ><cr>
 
 nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
 
@@ -255,6 +255,8 @@ set splitbelow
 
 set diffopt+=vertical
 
+set clipboard+=unnamedplus
+
 colorscheme onedark
 
 " ================ Plugins Config ================
@@ -271,10 +273,10 @@ let g:tagbar_autofocus = 0
 " does the same as taglist.vim's TlistOpen.
 autocmd VimEnter * nested :call tagbar#autoopen(1)
 
-Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/nvim3/bin/yapf'`
+" Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/nvim2/bin/yapf'`
 
 " === ale ===
-let g:ale_python_pylint_executable = $HOME .'/.virtualenvs/nvim3/bin/pylint'
+" let g:ale_python_pylint_executable = $HOME .'/.virtualenvs/nvim2/bin/pylint'
 let g:ale_linters = {
 \   'python': ['pylint'],
 \}
@@ -322,7 +324,7 @@ let g:NERDTreeRespectWildIgnore=1
 " --hidden: Search hidden files and folders
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+"  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
 
 " === vim-easyescape
 let g:easyescape_chars = { "j": 1, "k": 1 }
