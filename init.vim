@@ -333,3 +333,5 @@ let g:ctrlsf_mapping = {
 	\ "next": "n",
 	\ "prev": "N",
 	\ }
+
+let g:ctrlsf_default_root = 'project+fw'

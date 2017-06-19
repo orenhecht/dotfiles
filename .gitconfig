@@ -25,8 +25,17 @@
     s = status
     co = checkout
     cob = checkout -b
+
+    b = branch
+    l = pull
+    p = push
+    ss = stash save
+    sp = stash pop
+    mv = mv
+    rm = rm
+
     # list branches sorted by last modified
-    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+    lb = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
 
     # list aliases
     la = "!git config -l | grep alias | cut -c 7-"

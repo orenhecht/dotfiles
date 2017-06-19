@@ -30,3 +30,8 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 
+# add to script:
+# install nvim
+install virtualenvwrapper
+create virtualenv nvim2, nvim3
+pip install neovim pylint yapf jedi
