@@ -226,7 +226,7 @@ set backupskip=/tmp/*
 
 "Default to soft tab
 set expandtab
-set smartindent
+set cindent
 
 "Default to 4 spaces per tab
 set tabstop=4

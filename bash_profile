@@ -41,7 +41,7 @@ for al in `__git_aliases`; do
     function_exists $complete_fnc && __git_complete g$al $complete_func
 done
 
-# ===================== Function =====================
+# ===================== Functions =====================
 
 function g() {
     if [[ $# > 0 ]]; then
@@ -58,9 +58,8 @@ function md() {
     mkdir -p "$@" && cd "$@"
 }
 
-function docker-enter() {
-    docker exec -it $1 bash
-}
+
+source ~/.scripts/docker_funcs.sh
 
 
 # ===================== Aliases =====================
@@ -86,3 +85,4 @@ alias tm="~/.scripts/tm.sh"
 
 alias pudb="python -m pudb.run"
 alias pudb3="python3 -m pudb.run"
+
