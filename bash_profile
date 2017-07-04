@@ -70,8 +70,8 @@ alias ...='cd ../..'
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 
-alias l="ls -lAh -G"
-alias ll="ls -lh -G"
+alias l="ls -lAh -G --color=auto"
+alias ll="ls -lh -G --color=auto"
 
 alias v="nvim"
 alias vim="nvim"
