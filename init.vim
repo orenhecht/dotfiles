@@ -60,6 +60,7 @@ Plug 'dbakker/vim-projectroot'
 Plug 'duff/vim-bufonly'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'tudorprodan/pyfinder.vim'
 
 call plug#end()
 call glaive#Install()
@@ -170,6 +171,9 @@ vmap <leader>[ <gv
 vmap <leader>] >gv
 nmap <leader>[ <<
 nmap <leader>] >>
+
+" Close buffer but not split
+nmap ,d :b#<bar>bd#<CR>
 
 " ================ Other Settings ================
 
