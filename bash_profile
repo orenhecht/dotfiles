@@ -86,3 +86,7 @@ alias tm="~/.scripts/tm.sh"
 alias pudb="python -m pudb.run"
 alias pudb3="python3 -m pudb.run"
 
+
+
+# ===================== Custom aliases =====================
+export CLI_DEBUG=TRUE

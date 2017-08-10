@@ -24,7 +24,7 @@ function docker-ips(){
 
 
 function _container_complete(){
-    CONTAINERS=$(docker ps | grep -o "cheetah[^ ]*$" | tr '\n' ' ')
+    CONTAINERS=$(docker ps --format "{{ .Names }}" | tr '\n' ' ')
     cur_word="${COMP_WORDS[COMP_CWORD]}"
     prev_word="${COMP_WORDS[COMP_CWORD-1]}"
 
@@ -33,4 +33,3 @@ function _container_complete(){
 }
 
 complete -F _container_complete docker-enter docker-ips
-

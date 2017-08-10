@@ -53,7 +53,6 @@ Plug 'fisadev/vim-isort'
 Plug 'sickill/vim-pasta'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'jiangmiao/auto-pairs'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-unimpaired'
 Plug 'dbakker/vim-projectroot'
@@ -88,11 +87,6 @@ cnoreabbrev bda BufOnly
 
 
 " ================ Mappings ================
-
-noremap <Up> :echo 'use k!'<cr>
-noremap <Down> :echo 'use j!'<cr>
-noremap <Left> :echo 'use h!'<cr>
-noremap <Right> :echo 'use l!'<cr>
 
 nnoremap <C-Up> :wincmd +<cr>
 nnoremap <C-Down> :wincmd -<cr>
@@ -143,7 +137,7 @@ nnoremap <esc>[ <esc>[
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
-nnoremap <leader>nt :NERDTreeToggle<cr>
+nnoremap <leader>nt :NERDTreeToggle %<cr>
 
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
@@ -324,7 +318,7 @@ let g:NERDTreeRespectWildIgnore=1
 " --hidden: Search hidden files and folders
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-"  let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+ let $FZF_DEFAULT_COMMAND = 'ag -g ""'
 
 " === vim-easyescape
 let g:easyescape_chars = { "j": 1, "k": 1 }
