@@ -4,7 +4,7 @@
 export WORKON_HOME=$HOME/.virtualenvs
 mkdir -p $WORKON_HOME
 source /usr/local/bin/virtualenvwrapper.sh
-alias mkvirtualenv3="mkvirtualenv --python=\`which python3\`"
+alias mkvirtualenv3="mkvirtualenv --python=\`which python3.6\`"
 
 # bash-completion
 if [ "$(uname)" == "Darwin" ]; then

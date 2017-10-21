@@ -60,6 +60,8 @@ Plug 'duff/vim-bufonly'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tudorprodan/pyfinder.vim'
+Plug 'nathanalderson/yang.vim'
+Plug 'djoshea/vim-autoread'
 
 call plug#end()
 call glaive#Install()
@@ -155,7 +157,6 @@ nnoremap <leader>rr :FormatCode<CR>
 nnoremap <leader>l :lopen<CR>
 
 " Fugitive
-nmap <silent> <leader>gs :Gstatus<cr>
 nmap <leader>ge :Gedit<cr>
 nmap <silent><leader>gr :Gread<cr>
 nmap <silent><leader>gb :Gblame<cr>
@@ -270,7 +271,8 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 " Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/nvim2/bin/yapf'`
 
 " === ale ===
-" let g:ale_python_pylint_executable = $HOME .'/.virtualenvs/nvim2/bin/pylint'
+let g:ale_python_pylint_executable = '/home/dn/.virtualenvs/cheetah4.1/bin/pylint'
+let g:ale_python_pylint_options = '--rcfile ' . '/home/dn/.pylintrc'
 let g:ale_linters = {
 \   'python': ['pylint'],
 \}

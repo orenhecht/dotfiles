@@ -70,7 +70,8 @@ function set_git_branch {
   fi
 
   # Get the name of the branch.
-  branch_pattern="^On branch ([^${IFS}]*)"
+  SEPARATOR=$'\n'
+  branch_pattern="^On branch ([^${SEPARATOR}]*)"
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
     branch=${BASH_REMATCH[1]}
   fi
