@@ -1,6 +1,6 @@
 " Inspired by https://github.com/odedlaz/dotfiles
-" let g:python_host_prog = $HOME .'/.virtualenvs/nvim2/bin/python'
-" let g:python3_host_prog = $HOME .'/.virtualenvs/nvim3/bin/python'
+let g:python_host_prog = $HOME .'/.virtualenvs/nvim2/bin/python'
+let g:python3_host_prog = $HOME .'/.virtualenvs/nvim3/bin/python'
 let g:mapleader = ","
 
 setglobal encoding=utf-8

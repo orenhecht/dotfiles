@@ -1,9 +1,7 @@
 [include]
     path = ~/.gitconfig.local
 [alias]
-    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%C(cyan)\\ [%cn]" --decorate --date=short
-    ll = "log --pretty=format:\"%C(yellow)%h%Cred%d %Creset%s%C(cyan) [%cn]\" --decorate --numstat"
-    lg = !"git lg1"
+    lg = !"git lg2-specific"
     lg1 = !"git lg1-specific --all"
     lg2 = !"git lg2-specific --all"
     lg3 = !"git lg3-specific --all"
