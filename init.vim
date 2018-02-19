@@ -29,7 +29,6 @@ Plug 'google/vim-searchindex' " Display number of search matches & index of a cu
 Plug 'google/vim-codefmt' " utility for syntax-aware code formatting
 Plug 'godlygeek/tabular'
 Plug 'dyng/ctrlsf.vim'
-Plug 'troydm/zoomwintab.vim'
 Plug 'janko-m/vim-test'
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
@@ -62,6 +61,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'tudorprodan/pyfinder.vim'
 Plug 'nathanalderson/yang.vim'
 Plug 'djoshea/vim-autoread'
+Plug 'davidhalter/jedi-vim'
 
 call plug#end()
 call glaive#Install()
@@ -139,7 +139,7 @@ nnoremap <esc>[ <esc>[
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
-nnoremap <leader>nt :NERDTreeToggle %<cr>
+nnoremap <leader>nt :NERDTreeFind<cr>
 
 map <SPACE> <Plug>(wildfire-fuel)
 vmap <C-SPACE> <Plug>(wildfire-water)
@@ -149,6 +149,7 @@ cnoremap kj <ESC>
 
 " make sure fzf files run in the right directory
 nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
+nnoremap <c-b> :execute ':Buffers'<cr>
 
 " Comment map
 nmap <Leader>c gcc
@@ -168,7 +169,10 @@ nmap <leader>[ <<
 nmap <leader>] >>
 
 " Close buffer but not split
-nmap ,d :b#<bar>bd#<CR>
+nmap <leader>cb :b#<bar>bd#<CR>
+
+nnoremap <C-e> 10<C-e>
+nnoremap <C-y> 10<C-y>
 
 " ================ Other Settings ================
 
@@ -268,10 +272,10 @@ let g:tagbar_autofocus = 0
 " does the same as taglist.vim's TlistOpen.
 autocmd VimEnter * nested :call tagbar#autoopen(1)
 
-" Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/nvim2/bin/yapf'`
+Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/cheetah/bin/yapf'`
 
 " === ale ===
-let g:ale_python_pylint_executable = '/home/dn/.virtualenvs/cheetah4.1/bin/pylint'
+let g:ale_python_pylint_executable = '/home/dn/.virtualenvs/cheetah/bin/pylint'
 let g:ale_python_pylint_options = '--rcfile ' . '/home/dn/.pylintrc'
 let g:ale_linters = {
 \   'python': ['pylint'],

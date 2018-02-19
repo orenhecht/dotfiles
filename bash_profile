@@ -24,6 +24,9 @@ fi
 # nicer prompt
 source ~/.scripts/bash_prompt.sh
 
+# autojump
+source /usr/share/autojump/autojump.bash
+
 # a hisotrian
     HISTSIZE=10000000
 HISTFILESIZE=10000000
