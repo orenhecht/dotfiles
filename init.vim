@@ -20,20 +20,23 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'roxma/nvim-completion-manager' " Fast, Extensible, Async Completion Framework for Neovim
-Plug 'majutsushi/tagbar'
-Plug 'craigemery/vim-autotag'
+Plug 'ncm2/ncm2'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-tmux'
+Plug 'ncm2/ncm2-jedi'
+
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
 Plug 'google/vim-searchindex' " Display number of search matches & index of a current match
 Plug 'google/vim-codefmt' " utility for syntax-aware code formatting
-Plug 'godlygeek/tabular'
+
+Plug 'majutsushi/tagbar'
+Plug 'craigemery/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
-Plug 'janko-m/vim-test'
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'joshdick/onedark.vim'
 Plug 'luochen1990/rainbow'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'haya14busa/incsearch.vim'
@@ -42,26 +45,23 @@ Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-Plug 'gcmt/wildfire.vim'
-Plug 'zhou13/vim-easyescape'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'osyo-manga/vim-over'
 Plug 'tomtom/tcomment_vim'
-Plug 'fisadev/vim-isort'
 Plug 'sickill/vim-pasta'
-Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-unimpaired'
 Plug 'dbakker/vim-projectroot'
 Plug 'duff/vim-bufonly'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'tudorprodan/pyfinder.vim'
-Plug 'nathanalderson/yang.vim'
 Plug 'djoshea/vim-autoread'
 Plug 'davidhalter/jedi-vim'
+Plug 'editorconfig/editorconfig-vim'
+
+Plug 'joshdick/onedark.vim'
 
 call plug#end()
 call glaive#Install()
@@ -121,12 +121,6 @@ nmap <leader>tb :TagbarToggle<CR>
 
 nnoremap <leader>z :ZoomWinTabToggle<cr>
 
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ts :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
-
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -173,6 +167,9 @@ nmap <leader>cb :b#<bar>bd#<CR>
 
 nnoremap <C-e> 10<C-e>
 nnoremap <C-y> 10<C-y>
+
+
+vnoremap <leader>fl :FormatLines<CR>
 
 " ================ Other Settings ================
 
@@ -256,6 +253,7 @@ set diffopt+=vertical
 
 set clipboard+=unnamedplus
 
+syntax on
 colorscheme onedark
 
 " ================ Plugins Config ================
@@ -264,6 +262,14 @@ colorscheme onedark
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
 set shortmess+=c
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+" IMPORTANT: :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" Use <TAB> to select the popup menu:
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " === tagbar ===
 " display tags in a window, ordered by scope
@@ -324,7 +330,7 @@ let g:NERDTreeRespectWildIgnore=1
 " --hidden: Search hidden files and folders
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
- let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+ let $FZF_DEFAULT_COMMAND = 'ag --ignore .git --hidden -g ""'
 
 " === vim-easyescape
 let g:easyescape_chars = { "j": 1, "k": 1 }
@@ -340,4 +346,11 @@ let g:ctrlsf_mapping = {
 	\ "prev": "N",
 	\ }
 
+let g:ctrlsf_extra_backend_args = {
+    \ 'ag': '--ignore .git --hidden'
+    \ }
+
 let g:ctrlsf_default_root = 'project+fw'
+
+" editoconfig fugitive conflict
+let g:EditorConfig_exclude_patterns = ['fugitive://.*']

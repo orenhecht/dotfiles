@@ -3,7 +3,8 @@
 # mkvirtualenv
 export WORKON_HOME=$HOME/.virtualenvs
 mkdir -p $WORKON_HOME
-source /usr/local/bin/virtualenvwrapper.sh
+export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
+source $HOME/.local/bin/virtualenvwrapper.sh
 alias mkvirtualenv3="mkvirtualenv --python=\`which python3.6\`"
 
 # bash-completion
@@ -37,7 +38,7 @@ function_exists() {
     return $?
 }
 
-for al in `__git_aliases`; do
+for al in `git config --get-regexp alias | cut -d"." -f2 | cut -d" " -f1`; do
     alias g$al="git $al"
 
     complete_func=_git_$(__git_aliased_command $al)
@@ -82,5 +83,4 @@ alias oldvim="\vim"
 alias cdg="cd ~/git"
 alias cdd="cd ~/git/dotfiles"
 
-alias pudb="python -m pudb.run"
-alias pudb3="python3 -m pudb.run"
+alias cat='bat'
