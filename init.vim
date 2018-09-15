@@ -26,12 +26,15 @@ Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-tmux'
 Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-ultisnips'
 
 Plug 'google/vim-maktaba'
 Plug 'google/vim-glaive'
 Plug 'google/vim-searchindex' " Display number of search matches & index of a current match
 Plug 'google/vim-codefmt' " utility for syntax-aware code formatting
 
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
 Plug 'craigemery/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
@@ -258,7 +261,7 @@ colorscheme onedark
 
 " ================ Plugins Config ================
 
-" === nvim-completion-manager ===
+" === ncm2 ===
 " don't give |ins-completion-menu| messages.  For example,
 " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
 set shortmess+=c
@@ -270,6 +273,21 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" === ultisnips ===
+set runtimepath+=~/.config/nvim
+let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"
+let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/plugged/vim-snippets/UltiSnips', 'UltiSnips']
+"
+" Press enter key to trigger snippet expansion
+" The parameters are the same as `:help feedkeys()`
+inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+
+" c-j c-k for moving in snippet
+let g:UltiSnipsExpandTrigger         = "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger      = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger     = "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " === tagbar ===
 " display tags in a window, ordered by scope
