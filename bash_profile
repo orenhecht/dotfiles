@@ -80,7 +80,8 @@ alias vim="nvim"
 alias vi="nvim"
 alias oldvim="\vim"
 
-alias cdg="cd ~/git"
-alias cdd="cd ~/git/dotfiles"
+alias cdg="cd ~/github"
+alias cdd="cd ~/github/dotfiles"
 
 alias cat='bat'
+alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_rsa'

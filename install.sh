@@ -1,10 +1,22 @@
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
+sudo apt-get -y install ninja-build gettext libtool libtool-bin autoconf automake cmake g++ pkg-config unzip curl libevent-dev ncurses-dev bash-completion
+
+# install python3.6
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt-get update
+sudo apt-get -y install python3.6 python3.6-dev
+curl https://bootstrap.pypa.io/get-pip.py | sudo python3.6
+
 # install nvim
-curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-chmod u+x nvim.appimage
-sudo mv nvim.appimage /usr/local/bin/nvim
+curl -LO https://github.com/neovim/neovim/archive/v0.3.1.tar.gz
+tar xzf v0.3.1.tar.gz
+cd neovim-0.3.1
+make
+sudo make install
+cd ..
+rm -rf neovim-0.3.1 v0.3.1.tar.gz .nvimlog
 
 #install tmux 2.7
 curl -LO https://github.com/tmux/tmux/releases/download/2.7/tmux-2.7.tar.gz
@@ -15,12 +27,8 @@ sudo make install
 cd ..
 rm -rf tmux-2.7 tmux-2.7.tar.gz
 
-#install latest git
-sudo apt-add-repository ppa:git-core/ppa
-sudo apt update && sudo apt install git
-
 # install packages
-sudo apt install exuberant-ctags htop silversearcher-ag autojump
+sudo apt-get -y install exuberant-ctags htop silversearcher-ag autojump
 
 # install fd
 curl -LO https://github.com/sharkdp/fd/releases/download/v7.1.0/fd_7.1.0_amd64.deb
@@ -36,7 +44,7 @@ rm bat_0.7.0_amd64.deb
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 ~/.fzf/install
 
-#install virtualenc
+#install virtualencv
 pip3.6 install --user virtualenv virtualenvwrapper
 
 #dotfiles
