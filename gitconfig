@@ -15,7 +15,7 @@
     au = add -u
     c = commit --verbose
     cm = commit -m
-    cma = commit --amend --no-edit
+    ca = commit --amend --no-edit
 
     d = diff
     dc = diff --cached
@@ -27,6 +27,7 @@
     b = branch
     l = pull
     p = push
+    pf = push --force-with-lease
     ss = stash save
     sp = stash pop
     sl = stash list
