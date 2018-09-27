@@ -12,10 +12,10 @@
 
 
     a = add
+    au = add -u
     c = commit --verbose
-    ca = commit -a --verbose
     cm = commit -m
-    cam = commit -a -m
+    cma = commit --amend --no-edit
 
     d = diff
     dc = diff --cached

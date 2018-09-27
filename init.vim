@@ -192,8 +192,8 @@ set foldlevel=1
 set formatoptions-=t
 
 " add column indicator
-set textwidth=80
-set colorcolumn=+1
+set textwidth=100
+set colorcolumn=101
 
 "Set the term title
 set title
