@@ -63,6 +63,7 @@ Plug 'tudorprodan/pyfinder.vim'
 Plug 'djoshea/vim-autoread'
 Plug 'davidhalter/jedi-vim'
 Plug 'editorconfig/editorconfig-vim'
+Plug 'tweekmonster/impsort.vim'
 
 Plug 'joshdick/onedark.vim'
 
@@ -174,6 +175,8 @@ nnoremap <C-y> 10<C-y>
 
 vnoremap <leader>fl :FormatLines<CR>
 
+nnoremap <leader>is :<c-u>ImpSort!<cr>
+
 " ================ Other Settings ================
 
 " do not automatically wrap on load
@@ -273,6 +276,21 @@ inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
 " Use <TAB> to select the popup menu:
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" Update the popup menu faster
+let ncm2#popup_delay = 5
+" should make it faster
+let ncm2#complete_length = [[1, 1]]
+" Use new fuzzy based matches
+let g:ncm2#matcher = 'substrfuzzy'
+
+" Disable Jedi-vim autocompletion and enable call-signatures options
+let g:jedi#auto_initialization = 1
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:jedi#popup_on_dot = 0
+let g:jedi#completions_command = ""
+let g:jedi#show_call_signatures = "1"
 
 " === ultisnips ===
 set runtimepath+=~/.config/nvim
