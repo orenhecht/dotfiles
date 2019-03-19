@@ -336,6 +336,7 @@ let g:airline_theme='onedark'
 let g:rainbow_active = 1
 
 " === vim-better-whitespaces ===
+let g:strip_whitespace_confirm=0
 let g:better_whitespace_filetypes_blacklist=['diff',
          \'gitcommit',
          \'unite',
