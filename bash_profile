@@ -53,7 +53,7 @@ function g() {
         git $@
     else
         # otherwise, run git status
-        git status -s
+        git status
     fi
 }
 

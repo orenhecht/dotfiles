@@ -10,22 +10,24 @@ sudo apt-get -y install python3.6 python3.6-dev
 curl https://bootstrap.pypa.io/get-pip.py | sudo python3.6
 
 # install nvim
-curl -LO https://github.com/neovim/neovim/archive/v0.3.1.tar.gz
-tar xzf v0.3.1.tar.gz
-cd neovim-0.3.1
+NVIM_VERSION=0.3.7
+curl -LO https://github.com/neovim/neovim/archive/v${NVIM_VERSION}.tar.gz
+tar xzf v${NVIM_VERSION}.tar.gz
+cd neovim-${NVIM_VERSION}
 make
 sudo make install
 cd ..
-rm -rf neovim-0.3.1 v0.3.1.tar.gz .nvimlog
+rm -rf neovim-${NVIM_VERSION} v${NVIM_VERSION}.tar.gz .nvimlog
 
-#install tmux 2.7
-curl -LO https://github.com/tmux/tmux/releases/download/2.7/tmux-2.7.tar.gz
-tar xzf tmux-2.7.tar.gz
-cd tmux-2.7
+#install tmux
+TMUX_VERSION=2.7
+curl -LO https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz
+tar xzf tmux-${TMUX_VERSION}.tar.gz
+cd tmux-${TMUX_VERSION}
 ./configure && make
 sudo make install
 cd ..
-rm -rf tmux-2.7 tmux-2.7.tar.gz
+rm -rf tmux-${TMUX_VERSION} tmux-${TMUX_VERSION}.tar.gz
 
 # install packages
 sudo apt-get -y install exuberant-ctags htop silversearcher-ag autojump
