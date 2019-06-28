@@ -45,6 +45,15 @@ for al in `git config --get-regexp alias | cut -d"." -f2 | cut -d" " -f1`; do
     function_exists $complete_fnc && __git_complete g$al $complete_func
 done
 
+
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+
+
 # ===================== Functions =====================
 
 function g() {
@@ -85,3 +94,5 @@ alias cdd="cd ~/github/dotfiles"
 
 alias cat='bat'
 alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_rsa'
+
+alias t='tmux attach -d'

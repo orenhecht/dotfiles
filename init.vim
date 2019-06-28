@@ -40,6 +40,7 @@ Plug 'craigemery/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'luochen1990/rainbow'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'haya14busa/incsearch.vim'
@@ -65,7 +66,7 @@ Plug 'davidhalter/jedi-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tweekmonster/impsort.vim'
 
-Plug 'joshdick/onedark.vim'
+Plug 'chriskempson/base16-vim'
 
 call plug#end()
 call glaive#Install()
@@ -159,6 +160,7 @@ nnoremap <leader>l :lopen<CR>
 nmap <leader>ge :Gedit<cr>
 nmap <silent><leader>gr :Gread<cr>
 nmap <silent><leader>gb :Gblame<cr>
+nmap <leader>gs :Gstatus<CR><C-w>20-
 
 " Textmate style indentation
 vmap <leader>[ <gv
@@ -260,9 +262,13 @@ set diffopt+=vertical
 set clipboard+=unnamedplus
 
 syntax on
-colorscheme onedark
 
 " ================ Plugins Config ================
+
+if filereadable(expand("~/.vimrc_background"))
+  let base16colorspace=256
+  source ~/.vimrc_background
+endif
 
 " === ncm2 ===
 " don't give |ins-completion-menu| messages.  For example,
@@ -330,7 +336,7 @@ let g:ale_lint_on_text_changed = 'never'
 " === vim-airline ===
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='onedark'
+let g:airline_theme='base16'
 
 " === rainbow ===
 let g:rainbow_active = 1

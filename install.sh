@@ -81,6 +81,9 @@ git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 
+git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shell
+
+
 mkvirtualenv nvim2
 pip install neovim
 mkvirtualenv3 nvim3
