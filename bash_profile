@@ -42,7 +42,7 @@ for al in `git config --get-regexp alias | cut -d"." -f2 | cut -d" " -f1`; do
     alias g$al="git $al"
 
     complete_func=_git_$(__git_aliased_command $al)
-    function_exists $complete_fnc && __git_complete g$al $complete_func
+    function_exists $complete_fnc && __git_complete g$al $complete_func  &>/dev/null
 done
 
 
@@ -95,4 +95,4 @@ alias cdd="cd ~/github/dotfiles"
 alias cat='bat'
 alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_rsa'
 
-alias t='tmux attach -d'
+alias t='tmux new-session -ADs dn'

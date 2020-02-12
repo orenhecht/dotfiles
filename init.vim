@@ -197,8 +197,8 @@ set foldlevel=1
 set formatoptions-=t
 
 " add column indicator
-set textwidth=100
-set colorcolumn=101
+set textwidth=120
+set colorcolumn=121
 
 "Set the term title
 set title
@@ -373,7 +373,8 @@ let g:NERDTreeRespectWildIgnore=1
 " --hidden: Search hidden files and folders
 " --follow: Follow symlinks
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
- let $FZF_DEFAULT_COMMAND = 'ag --ignore .git --hidden -g ""'
+"  let $FZF_DEFAULT_COMMAND = 'ag --ignore .git --hidden -g ""'
+let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 " === vim-easyescape
 let g:easyescape_chars = { "j": 1, "k": 1 }
@@ -390,7 +391,7 @@ let g:ctrlsf_mapping = {
 	\ }
 
 let g:ctrlsf_extra_backend_args = {
-    \ 'ag': '--ignore .git --hidden'
+    \ 'rg': '--no-ignore --hidden --follow --glob "!.git/*"'
     \ }
 
 let g:ctrlsf_default_root = 'project+fw'

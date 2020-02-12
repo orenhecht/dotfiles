@@ -11,3 +11,6 @@
 # W1201: *Specify string format arguments as logging function parameters*
 # W1202: *Use % formatting in logging functions and pass the % parameters as argument
 disable=C0103,C0111,C0302,C0321,C0413,I0011,R0913,W0511,W0603,W1201,W1202
+
+[FORMAT]
+max-line-length=120
