@@ -1,3 +1,4 @@
+set -e
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -6,11 +7,11 @@ sudo apt-get -y install ninja-build gettext libtool libtool-bin autoconf automak
 # install python3.6
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt-get update
-sudo apt-get -y install python3.6 python3.6-dev
+sudo apt-get -y install python3.6 python3.6-dev python3-distutils
 curl https://bootstrap.pypa.io/get-pip.py | sudo python3.6
 
 # install nvim
-NVIM_VERSION=0.3.7
+NVIM_VERSION=0.4.4
 curl -LO https://github.com/neovim/neovim/archive/v${NVIM_VERSION}.tar.gz
 tar xzf v${NVIM_VERSION}.tar.gz
 cd neovim-${NVIM_VERSION}
@@ -20,7 +21,7 @@ cd ..
 rm -rf neovim-${NVIM_VERSION} v${NVIM_VERSION}.tar.gz .nvimlog
 
 #install tmux
-TMUX_VERSION=2.7
+TMUX_VERSION=3.1b
 curl -LO https://github.com/tmux/tmux/releases/download/${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz
 tar xzf tmux-${TMUX_VERSION}.tar.gz
 cd tmux-${TMUX_VERSION}
@@ -33,14 +34,16 @@ rm -rf tmux-${TMUX_VERSION} tmux-${TMUX_VERSION}.tar.gz
 sudo apt-get -y install exuberant-ctags htop silversearcher-ag autojump
 
 # install fd
-curl -LO https://github.com/sharkdp/fd/releases/download/v7.1.0/fd_7.1.0_amd64.deb
-sudo dpkg -i fd_7.1.0_amd64.deb
-rm fd_7.1.0_amd64.deb
+FD_VERSION=8.1.1
+curl -LO https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd_${FD_VERSION}_amd64.deb
+sudo dpkg -i fd_${FD_VERSION}_amd64.deb
+rm fd_${FD_VERSION}_amd64.deb
 
 #install bat
-curl -LO https://github.com/sharkdp/bat/releases/download/v0.7.0/bat_0.7.0_amd64.deb
-sudo dpkg -i bat_0.7.0_amd64.deb
-rm bat_0.7.0_amd64.deb
+BAT_VERSION=0.15.4
+curl -LO https://github.com/sharkdp/bat/releases/download/v${BAT_VERSION}/bat_${BAT_VERSION}_amd64.deb
+sudo dpkg -i bat_${BAT_VERSION}_amd64.deb
+rm bat_${BAT_VERSION}_amd64.deb
 
 #install fzf
 git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
