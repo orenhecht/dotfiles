@@ -88,6 +88,10 @@ git clone https://github.com/chriskempson/base16-shell.git ~/.config/base16-shel
 
 
 mkvirtualenv nvim2
-pip install neovim
+pip install pynvim jedi
 mkvirtualenv3 nvim3
-pip install neovim
+pip install pynvim jedi
+
+echo "============================================="
+echo "NOW INSTALL yapf pylint jedi ON THE MAIN VENV"
+echo "============================================="

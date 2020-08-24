@@ -381,7 +381,7 @@ let g:easyescape_timeout = 100
 
 " === autotag ===
 " put the tags file in the git directory
-let g:autotagTagsFile = projectroot#guess() .'/.git/tags'
+let g:autotagTagsFile = projectroot#guess() .'/tags'
 
 
 let g:ctrlsf_mapping = {

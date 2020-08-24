@@ -16,11 +16,10 @@ cat << 'EOF' > "$TEMPLATE_DIR/hooks/ctags"
 #!/bin/sh
 set -e
 PATH="/usr/local/bin:$PATH"
-dir="$(git rev-parse --git-dir)"
-trap 'rm -f "$dir/$$.tags"' EXIT
+trap 'rm -f "$$.tags"' EXIT
 git ls-files | \
-  ctags --tag-relative=yes -L - -f"$dir/$$.tags"
-mv "$dir/$$.tags" "$dir/tags"
+  ctags --tag-relative -L - -f"$$.tags"
+mv "$$.tags" "tags"
 EOF
 
 for f in "post-checkout" "post-commit" "post-merge"; do
