@@ -64,6 +64,8 @@ Plug 'djoshea/vim-autoread'
 Plug 'davidhalter/jedi-vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'tweekmonster/impsort.vim'
+Plug 'gu-fan/riv.vim'
+Plug 'Rykka/InstantRst'
 
 Plug 'chriskempson/base16-vim'
 
@@ -381,8 +383,8 @@ let g:easyescape_timeout = 100
 
 " === autotag ===
 " put the tags file in the git directory
-let g:autotagTagsFile = projectroot#guess() .'/tags'
-
+let g:autotagTagsFile = projectroot#guess() .'/.git/tags'
+set tags^=.git/tags;~
 
 let g:ctrlsf_mapping = {
 	\ "next": "n",
