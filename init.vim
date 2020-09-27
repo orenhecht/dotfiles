@@ -36,7 +36,7 @@ Plug 'google/vim-codefmt' " utility for syntax-aware code formatting
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
 Plug 'majutsushi/tagbar'
-Plug 'craigemery/vim-autotag'
+Plug 'orenhecht/vim-autotag'
 Plug 'dyng/ctrlsf.vim'
 Plug 'w0rp/ale'
 Plug 'vim-airline/vim-airline'
@@ -263,6 +263,10 @@ set diffopt+=vertical
 set clipboard+=unnamedplus
 
 syntax on
+
+" spell checking for .rst files
+autocmd BufRead,BufNewFile *.rst set spell spelllang=en_us
+set complete+=kspell
 
 " ================ Plugins Config ================
 
