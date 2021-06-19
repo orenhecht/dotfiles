@@ -1,6 +1,5 @@
 " Inspired by https://github.com/odedlaz/dotfiles
-let g:python_host_prog = $HOME .'/.virtualenvs/nvim2/bin/python'
-let g:python3_host_prog = $HOME .'/.virtualenvs/nvim3/bin/python'
+let g:python3_host_prog = $HOME .'/.venv/nvim/bin/python'
 let g:mapleader = ","
 
 setglobal encoding=utf-8
@@ -20,55 +19,56 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'ncm2/ncm2'
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-tmux'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-ultisnips'
+" Plug 'ncm2/ncm2'
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-tmux'
+" Plug 'ncm2/ncm2-jedi'
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+" Plug 'w0rp/ale'
 
-Plug 'google/vim-maktaba'
-Plug 'google/vim-glaive'
-Plug 'google/vim-searchindex' " Display number of search matches & index of a current match
-Plug 'google/vim-codefmt' " utility for syntax-aware code formatting
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
 
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'majutsushi/tagbar'
-Plug 'orenhecht/vim-autotag'
-Plug 'dyng/ctrlsf.vim'
-Plug 'w0rp/ale'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'luochen1990/rainbow'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-Plug 'osyo-manga/vim-over'
-Plug 'tomtom/tcomment_vim'
-Plug 'sickill/vim-pasta'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'dbakker/vim-projectroot'
-Plug 'duff/vim-bufonly'
-Plug 'tmux-plugins/vim-tmux'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'djoshea/vim-autoread'
-Plug 'davidhalter/jedi-vim'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'tweekmonster/impsort.vim'
-Plug 'gu-fan/riv.vim'
-Plug 'Rykka/InstantRst'
+Plug 'google/vim-maktaba'             " Required by the other google plugins
+Plug 'google/vim-glaive'              " Required by the other google plugins
+Plug 'google/vim-searchindex'         " Display number of search matches & index of a current match
+Plug 'google/vim-codefmt'             " utility for syntax-aware code formatting
 
-Plug 'chriskempson/base16-vim'
+Plug 'majutsushi/tagbar'              " Tags browser
+Plug 'dyng/ctrlsf.vim'                " Code search tool
+Plug 'vim-airline/vim-airline'        " Airline status line
+Plug 'vim-airline/vim-airline-themes' " Base16 airline theme
+Plug 'luochen1990/rainbow'            " Different colors for nested parentheses
+Plug 'ntpeters/vim-better-whitespace' " Highlight trailing whitespaces
+Plug 'haya14busa/incsearch.vim'       " Highlight search results
+Plug 'haya14busa/incsearch-fuzzy.vim' " Fuzzy incsearch
+Plug 'osyo-manga/vim-over'            " Preview of searches/replaces
+Plug 'scrooloose/nerdtree'            " File system explorer plugin
+Plug 'Xuyuanp/nerdtree-git-plugin'    " Show files git status in NERDTree
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'               " Fzf plugin
+Plug 'tpope/vim-fugitive'             " Git plugin
+Plug 'tomtom/tcomment_vim'            " Commenting in vim
+Plug 'sickill/vim-pasta'              " Match indetation of pasted text
+Plug 'roxma/vim-tmux-clipboard'       " Share clipboard with tmux
+Plug 'tpope/vim-surround'             " Changes string surrounding characters
+Plug 'tpope/vim-unimpaired'           " Various brackets mappings (like [e )
+Plug 'dbakker/vim-projectroot'        " Detect the project root dir
+Plug 'duff/vim-bufonly'               " Close all other buffers, used by 'bda' alias
+Plug 'tmux-plugins/vim-tmux'          " Support for .tmux.conf in vim
+Plug 'christoomey/vim-tmux-navigator' " Seamless navigation with tmux
+Plug 'djoshea/vim-autoread'           " Automatically load buffers of file that chagned on the disk
+Plug 'editorconfig/editorconfig-vim'  " Support editorconfig file for shared coding styles
+Plug 'ludovicchabant/vim-gutentags'   " Automatic ctags
+Plug 'chriskempson/base16-vim'        " Base16 theme support
+Plug 'vim-scripts/zoomwintab.vim'
 
+" Plug 'davidhalter/jedi-vim'
+"
 call plug#end()
 call glaive#Install()
 
@@ -178,8 +178,10 @@ nnoremap <C-y> 10<C-y>
 
 vnoremap <leader>fl :FormatLines<CR>
 
-nnoremap <leader>is :<c-u>ImpSort!<cr>
-
+" fuzzy incsearch
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
 " ================ Other Settings ================
 
 " do not automatically wrap on load
@@ -247,11 +249,12 @@ set hidden
 set inccommand=split
 
 " Reload buffer it was edited outside of vim
-augroup set_update
-   au!
-   set autoread
-   au CursorHold * checktime
-augroup END
+" MIGHT BE NOT NEEDED DUE TO djoshea/vim-autoread
+" augroup set_update
+"    au!
+"    set autoread
+"    au CursorHold * checktime
+" augroup END
 
 set noshowmode
 
@@ -260,13 +263,65 @@ set splitbelow
 
 set diffopt+=vertical
 
-set clipboard+=unnamedplus
-
 syntax on
 
 " spell checking for .rst files
 autocmd BufRead,BufNewFile *.rst set spell spelllang=en_us
 set complete+=kspell
+
+" ================ LUA config ================
+" " -------------------- LSP ---------------------------------
+:lua << EOF
+local nvim_lsp = require('lspconfig')
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+  --Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  require'completion'.on_attach()
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+  buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+  buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+  buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+  buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+  buf_set_keymap('n', '<space>e', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+  buf_set_keymap('n', '[d', '<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>', opts)
+  buf_set_keymap('n', ']d', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = { "pyright" }
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup { on_attach = on_attach }
+end
+
+EOF
+
+" Completion
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" -------------------- LSP ---------------------------------
 
 " ================ Plugins Config ================
 
@@ -275,48 +330,48 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-" === ncm2 ===
-" don't give |ins-completion-menu| messages.  For example,
-" '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-set shortmess+=c
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-" IMPORTANT: :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" Use <TAB> to select the popup menu:
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" Update the popup menu faster
-let ncm2#popup_delay = 5
-" should make it faster
-let ncm2#complete_length = [[1, 1]]
-" Use new fuzzy based matches
-let g:ncm2#matcher = 'substrfuzzy'
+" " === ncm2 ===
+" " don't give |ins-completion-menu| messages.  For example,
+" " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
+" set shortmess+=c
+" " enable ncm2 for all buffers
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+" " IMPORTANT: :help Ncm2PopupOpen for more information
+" set completeopt=noinsert,menuone,noselect
+" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
+" " Use <TAB> to select the popup menu:
+" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" " Update the popup menu faster
+" let ncm2#popup_delay = 5
+" " should make it faster
+" let ncm2#complete_length = [[1, 1]]
+" " Use new fuzzy based matches
+" let g:ncm2#matcher = 'substrfuzzy'
 
 " Disable Jedi-vim autocompletion and enable call-signatures options
-let g:jedi#auto_initialization = 1
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:jedi#popup_on_dot = 0
-let g:jedi#completions_command = ""
-let g:jedi#show_call_signatures = "1"
+" let g:jedi#auto_initialization = 1
+" let g:jedi#completions_enabled = 0
+" let g:jedi#auto_vim_configuration = 0
+" let g:jedi#smart_auto_mappings = 0
+" let g:jedi#popup_on_dot = 0
+" let g:jedi#completions_command = ""
+" let g:jedi#show_call_signatures = "1"
 
 " === ultisnips ===
-set runtimepath+=~/.config/nvim
-let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"
-let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/plugged/vim-snippets/UltiSnips', 'UltiSnips']
+" set runtimepath+=~/.config/nvim
+" let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"
+" let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/plugged/vim-snippets/UltiSnips', 'UltiSnips']
 "
 " Press enter key to trigger snippet expansion
 " The parameters are the same as `:help feedkeys()`
-inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
+" inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
 
 " c-j c-k for moving in snippet
-let g:UltiSnipsExpandTrigger         = "<Plug>(ultisnips_expand)"
-let g:UltiSnipsJumpForwardTrigger      = "<c-j>"
-let g:UltiSnipsJumpBackwardTrigger     = "<c-k>"
-let g:UltiSnipsRemoveSelectModeMappings = 0
+" let g:UltiSnipsExpandTrigger         = "<Plug>(ultisnips_expand)"
+" let g:UltiSnipsJumpForwardTrigger      = "<c-j>"
+" let g:UltiSnipsJumpBackwardTrigger     = "<c-k>"
+" let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " === tagbar ===
 " display tags in a window, ordered by scope
@@ -324,8 +379,10 @@ let g:tagbar_autofocus = 0
 " auto open tagbar when opening a tagged file
 " does the same as taglist.vim's TlistOpen.
 autocmd VimEnter * nested :call tagbar#autoopen(1)
+" disable cache for snap universal tags
+let g:tagbar_use_cache = 0
 
-Glaive codefmt yapf_executable=`$HOME .'/.virtualenvs/cheetah/bin/yapf'`
+Glaive codefmt yapf_executable=`$HOME .'/.venv/cheetah/bin/yapf'`
 
 " === ale ===
 let g:ale_python_pylint_executable = '/home/dn/.virtualenvs/cheetah/bin/pylint'
@@ -380,15 +437,6 @@ let g:NERDTreeRespectWildIgnore=1
 " --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 "  let $FZF_DEFAULT_COMMAND = 'ag --ignore .git --hidden -g ""'
 let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
-
-" === vim-easyescape
-let g:easyescape_chars = { "j": 1, "k": 1 }
-let g:easyescape_timeout = 100
-
-" === autotag ===
-" put the tags file in the git directory
-let g:autotagTagsFile = projectroot#guess() .'/.git/tags'
-set tags^=.git/tags;~
 
 let g:ctrlsf_mapping = {
 	\ "next": "n",
