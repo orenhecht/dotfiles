@@ -1,11 +1,5 @@
 # ===================== General Settings =====================
 
-# mkvirtualenv
-export WORKON_HOME=$HOME/.virtualenvs
-mkdir -p $WORKON_HOME
-export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3.6
-source $HOME/.local/bin/virtualenvwrapper.sh
-alias mkvirtualenv3="mkvirtualenv --python=\`which python3.6\`"
 
 # bash-completion
 if [ "$(uname)" == "Darwin" ]; then
@@ -25,8 +19,8 @@ fi
 # nicer prompt
 source ~/.scripts/bash_prompt.sh
 
-# autojump
-source /usr/share/autojump/autojump.bash
+# venv aliases
+source ~/.scripts/venv_aliases.sh
 
 # a hisotrian
     HISTSIZE=10000000
@@ -53,6 +47,13 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 
+# fasd
+fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias bash-hook bash-ccomp bash-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
 
 # ===================== Functions =====================
 
@@ -93,6 +94,6 @@ alias cdg="cd ~/github"
 alias cdd="cd ~/github/dotfiles"
 
 alias cat='bat'
-alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_rsa'
+alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_ed25519'
 
-alias t='tmux new-session -ADs dn'
+alias t='tmux -2 new-session -ADs dn'
