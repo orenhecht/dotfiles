@@ -22,17 +22,12 @@
 #   https://gist.github.com/31967
 
 # The various escape codes that we can use to color our prompt.
-        RED="\[\033[0;31m\]"
-     YELLOW="\[\033[1;33m\]"
-      GREEN="\[\033[0;32m\]"
-       BLUE="\[\033[1;34m\]"
-  LIGHT_RED="\[\033[1;31m\]"
-LIGHT_GREEN="\[\033[1;32m\]"
-       CYAN="\[\033[0;36m\]"
-      WHITE="\[\033[1;37m\]"
- LIGHT_GRAY="\[\033[0;37m\]"
- LIGHT_BLUE="\[\033[0;94m\]"
- COLOR_NONE="\[\e[0m\]"
+      GREEN="%F{green}"
+     YELLOW="%F{yellow}"
+       BLUE="%F{blue}"
+       RED="%F{red}"
+       CYAN="%F{cyan}"
+ COLOR_NONE="%f"
 
 # Detect whether the current directory is a git repository.
 function is_git_repository {
@@ -50,7 +45,7 @@ function set_git_branch {
   elif [[ ${git_status} =~ "Changes to be committed" ]]; then
     state="${YELLOW}"
   else
-    state="${LIGHT_RED}"
+    state="${RED}"
   fi
 
   # Set arrow icon based on status against remote.
@@ -73,7 +68,7 @@ function set_git_branch {
   SEPARATOR=$'\n'
   branch_pattern="^On branch ([^${SEPARATOR}]*)"
   if [[ ${git_status} =~ ${branch_pattern} ]]; then
-    branch=${BASH_REMATCH[1]}
+    branch=${match[1]}
   fi
 
   # Set the final branch string.
@@ -83,20 +78,21 @@ function set_git_branch {
 # Return the prompt symbol to use, colorized based on the return value of the
 # previous command.
 function set_prompt_symbol () {
-  if test $1 -eq 0 ; then
+  if [ "$1" -eq "0" ]; then
       PROMPT_SYMBOL="\$"
   else
-      PROMPT_SYMBOL="${LIGHT_RED}\$${COLOR_NONE}"
+      PROMPT_SYMBOL="${RED}\$${COLOR_NONE}"
   fi
 }
 
 # Determine active Python virtualenv details.
 function set_virtualenv () {
-  if test -z "$VIRTUAL_ENV" ; then
+  if [ -z "${VIRTUAL_ENV}" ] ; then
       PYTHON_VIRTUALENV=""
   else
       PYTHON_VIRTUALENV="${BLUE}(`basename \"$VIRTUAL_ENV\"`)${COLOR_NONE}"
   fi
+
 }
 
 # Set the full bash prompt.
@@ -116,9 +112,12 @@ function set_bash_prompt () {
   fi
 
   # Set the bash prompt variable.
-  PS1="${PYTHON_VIRTUALENV}\u@\h:${CYAN}\w${COLOR_NONE}${BRANCH}${PROMPT_SYMBOL} "
+  #PS1="${PYTHON_VIRTUALENV}\u@\h:${CYAN}\w${COLOR_NONE}${BRANCH}${PROMPT_SYMBOL} "
+  PROMPT="${PYTHON_VIRTUALENV}%n@%m:${CYAN}%~${COLOR_NONE}${BRANCH}${PROMPT_SYMBOL} "
 # ${PYTHON_VIRTUALENV}${GREEN}\u@\h ${YELLOW}\w${COLOR_NONE} ${BRANCH}${PROMPT_SYMBOL} "
 }
 
 # Tell bash to execute this function just before displaying its prompt.
-PROMPT_COMMAND=set_bash_prompt
+#PROMPT_COMMAND=set_bash_prompt
+#set_bash_prompt
+precmd() { eval "set_bash_prompt" }

@@ -48,9 +48,8 @@
 
 [core]
 	editor = nvim
+	pager = less -F -X
 [mergetool "fugitive"]
 	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 [merge]
 	tool = fugitive
-[init]
-	templatedir = /home/dn/.git_template
