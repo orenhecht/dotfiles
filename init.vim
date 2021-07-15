@@ -19,19 +19,12 @@ endif
 
 call plug#begin('~/.config/nvim/plugged')
 
-" Plug 'ncm2/ncm2'
-" Plug 'roxma/nvim-yarp'
-" Plug 'ncm2/ncm2-bufword'
-" Plug 'ncm2/ncm2-path'
-" Plug 'ncm2/ncm2-tmux'
-" Plug 'ncm2/ncm2-jedi'
-" Plug 'ncm2/ncm2-ultisnips'
-" Plug 'SirVer/ultisnips'
-" Plug 'honza/vim-snippets'
-" Plug 'w0rp/ale'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 Plug 'neovim/nvim-lspconfig'
 Plug 'nvim-lua/completion-nvim'
+Plug 'stsewd/sphinx.nvim', { 'do': ':UpdateRemotePlugins' } " Sphinx integration
 
 Plug 'google/vim-maktaba'             " Required by the other google plugins
 Plug 'google/vim-glaive'              " Required by the other google plugins
@@ -49,8 +42,11 @@ Plug 'haya14busa/incsearch-fuzzy.vim' " Fuzzy incsearch
 Plug 'osyo-manga/vim-over'            " Preview of searches/replaces
 Plug 'scrooloose/nerdtree'            " File system explorer plugin
 Plug 'Xuyuanp/nerdtree-git-plugin'    " Show files git status in NERDTree
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'               " Fzf plugin
+
+Plug 'nvim-lua/popup.nvim'            " Dependency for telescope.nvim
+Plug 'nvim-lua/plenary.nvim'          " Dependency for telescope.nvim
+Plug 'nvim-telescope/telescope.nvim'  " Fuzzy finder
+
 Plug 'tpope/vim-fugitive'             " Git plugin
 Plug 'tomtom/tcomment_vim'            " Commenting in vim
 Plug 'sickill/vim-pasta'              " Match indetation of pasted text
@@ -65,10 +61,9 @@ Plug 'djoshea/vim-autoread'           " Automatically load buffers of file that 
 Plug 'editorconfig/editorconfig-vim'  " Support editorconfig file for shared coding styles
 Plug 'ludovicchabant/vim-gutentags'   " Automatic ctags
 Plug 'chriskempson/base16-vim'        " Base16 theme support
-Plug 'vim-scripts/zoomwintab.vim'
+Plug 'vim-scripts/zoomwintab.vim'     " Zoom into vim tab
+Plug 'tpope/vim-sleuth'               " automatically adjust 'shiftwidth' and 'expandtab'
 
-" Plug 'davidhalter/jedi-vim'
-"
 call plug#end()
 call glaive#Install()
 
@@ -96,13 +91,6 @@ cnoreabbrev bda BufOnly
 
 " ================ Mappings ================
 
-nnoremap <C-Up> :wincmd +<cr>
-nnoremap <C-Down> :wincmd -<cr>
-nnoremap <C-Left> :wincmd <<cr>
-nnoremap <C-Right> :wincmd ><cr>
-
-nnoremap <silent> <BS> :TmuxNavigateLeft<cr>
-
 " Save
 inoremap <C-s>     <C-O>:update<cr>
 nnoremap <C-s>     :update<cr>
@@ -120,9 +108,6 @@ nnoremap <c-f> :CtrlSF<Space>
 nmap <leader>f <Plug>CtrlSFCwordPath
 nnoremap <leader>cf :CtrlSFToggle<cr>
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 nmap <leader>tb :TagbarToggle<CR>
 
 nnoremap <leader>z :ZoomWinTabToggle<cr>
@@ -130,10 +115,12 @@ nnoremap <leader>z :ZoomWinTabToggle<cr>
 map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
+" fuzzy incsearch
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
 
-nnoremap <silent><leader><SPACE> :noh<CR>
 nnoremap <silent><esc> :noh<CR>
-nnoremap <esc>[ <esc>[
 
 " edit/reload init.vim file
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
@@ -141,21 +128,8 @@ nmap <silent> <leader>rv :so $MYVIMRC<CR>
 
 nnoremap <leader>nt :NERDTreeFind<cr>
 
-map <SPACE> <Plug>(wildfire-fuel)
-vmap <C-SPACE> <Plug>(wildfire-water)
-
-cnoremap jk <ESC>
-cnoremap kj <ESC>
-
-" make sure fzf files run in the right directory
-nnoremap <c-p> :execute ':Files ' projectroot#guess()<cr>
-nnoremap <c-b> :execute ':Buffers'<cr>
-
 " Comment map
 nmap <Leader>c gcc
-
-nnoremap <leader>rr :FormatCode<CR>
-nnoremap <leader>l :lopen<CR>
 
 " Fugitive
 nmap <leader>ge :Gedit<cr>
@@ -175,13 +149,12 @@ nmap <leader>cb :b#<bar>bd#<CR>
 nnoremap <C-e> 10<C-e>
 nnoremap <C-y> 10<C-y>
 
-
 vnoremap <leader>fl :FormatLines<CR>
 
-" fuzzy incsearch
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
+" Find files using Telescope
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <c-p> <cmd>Telescope git_files<cr>
+nnoremap <c-b> <cmd>Telescope buffers<cr>
 " ================ Other Settings ================
 
 " do not automatically wrap on load
@@ -248,14 +221,6 @@ set hidden
 
 set inccommand=split
 
-" Reload buffer it was edited outside of vim
-" MIGHT BE NOT NEEDED DUE TO djoshea/vim-autoread
-" augroup set_update
-"    au!
-"    set autoread
-"    au CursorHold * checktime
-" augroup END
-
 set noshowmode
 
 set splitright
@@ -310,17 +275,28 @@ end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
 -- map buffer local keybindings when the language server attaches
-local servers = { "pyright" }
+local servers = { "pyright", "bashls" }
 for _, lsp in ipairs(servers) do
   nvim_lsp[lsp].setup { on_attach = on_attach }
 end
 
 EOF
 
-" Completion
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
+let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
+" enable snippets completion
+let g:completion_enable_snippet = 'UltiSnips'
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+
+" Avoid showing message extra message when using completion
+set shortmess+=c
+
+
 " -------------------- LSP ---------------------------------
 
 " ================ Plugins Config ================
@@ -330,48 +306,13 @@ if filereadable(expand("~/.vimrc_background"))
   source ~/.vimrc_background
 endif
 
-" " === ncm2 ===
-" " don't give |ins-completion-menu| messages.  For example,
-" " '-- XXX completion (YYY)', 'match 1 of 2', 'The only match',
-" set shortmess+=c
-" " enable ncm2 for all buffers
-" autocmd BufEnter * call ncm2#enable_for_buffer()
-" " IMPORTANT: :help Ncm2PopupOpen for more information
-" set completeopt=noinsert,menuone,noselect
-" inoremap <expr> <CR> (pumvisible() ? "\<c-y>\<cr>" : "\<CR>")
-" " Use <TAB> to select the popup menu:
-" inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-" inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-" " Update the popup menu faster
-" let ncm2#popup_delay = 5
-" " should make it faster
-" let ncm2#complete_length = [[1, 1]]
-" " Use new fuzzy based matches
-" let g:ncm2#matcher = 'substrfuzzy'
-
-" Disable Jedi-vim autocompletion and enable call-signatures options
-" let g:jedi#auto_initialization = 1
-" let g:jedi#completions_enabled = 0
-" let g:jedi#auto_vim_configuration = 0
-" let g:jedi#smart_auto_mappings = 0
-" let g:jedi#popup_on_dot = 0
-" let g:jedi#completions_command = ""
-" let g:jedi#show_call_signatures = "1"
 
 " === ultisnips ===
-" set runtimepath+=~/.config/nvim
-" let g:UltiSnipsSnippetsDir = "~/.config/nvim/UltiSnips"
-" let g:UltiSnipsSnippetDirectories = ['~/.config/nvim/plugged/vim-snippets/UltiSnips', 'UltiSnips']
-"
-" Press enter key to trigger snippet expansion
-" The parameters are the same as `:help feedkeys()`
-" inoremap <silent> <expr> <CR> ncm2_ultisnips#expand_or("\<CR>", 'n')
-
 " c-j c-k for moving in snippet
-" let g:UltiSnipsExpandTrigger         = "<Plug>(ultisnips_expand)"
-" let g:UltiSnipsJumpForwardTrigger      = "<c-j>"
-" let g:UltiSnipsJumpBackwardTrigger     = "<c-k>"
-" let g:UltiSnipsRemoveSelectModeMappings = 0
+let g:UltiSnipsExpandTrigger         = "<Plug>(ultisnips_expand)"
+let g:UltiSnipsJumpForwardTrigger      = "<c-j>"
+let g:UltiSnipsJumpBackwardTrigger     = "<c-k>"
+let g:UltiSnipsRemoveSelectModeMappings = 0
 
 " === tagbar ===
 " display tags in a window, ordered by scope
@@ -384,16 +325,6 @@ let g:tagbar_use_cache = 0
 
 Glaive codefmt yapf_executable=`$HOME .'/.venv/cheetah/bin/yapf'`
 
-" === ale ===
-let g:ale_python_pylint_executable = '/home/dn/.virtualenvs/cheetah/bin/pylint'
-let g:ale_python_pylint_options = '--rcfile ' . '/home/dn/.pylintrc'
-let g:ale_linters = {
-\   'python': ['pylint'],
-\}
-let g:ale_open_list = 0
-let g:ale_sign_error = '✖'
-let g:ale_sign_warning = '⚠'
-let g:ale_lint_on_text_changed = 'never'
 
 " === vim-airline ===
 let g:airline_powerline_fonts = 1
@@ -429,14 +360,6 @@ let g:loaded_netrwPlugin=1
 "Rootignore converts .gitignore into wildignore
 "thus making NERDTree respect gitignore!
 let g:NERDTreeRespectWildIgnore=1
-
-" === fzf ===
-" --files: List files that would be searched but do not search
-" --hidden: Search hidden files and folders
-" --follow: Follow symlinks
-" --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-"  let $FZF_DEFAULT_COMMAND = 'ag --ignore .git --hidden -g ""'
-let $FZF_DEFAULT_COMMAND = 'rg --files --no-ignore --hidden --follow --glob "!.git/*"'
 
 let g:ctrlsf_mapping = {
 	\ "next": "n",
