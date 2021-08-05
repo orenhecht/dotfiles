@@ -118,6 +118,9 @@ function set_bash_prompt () {
 }
 
 # Tell bash to execute this function just before displaying its prompt.
+
+# for bash
 #PROMPT_COMMAND=set_bash_prompt
 #set_bash_prompt
+
 precmd() { eval "set_bash_prompt" }

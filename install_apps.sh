@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -e
+set -e -x
 
 function install_github_latest() {
     local github_repo=${1}
@@ -22,6 +22,9 @@ function install_github_latest() {
         tar xzf ${file_basename}
         cd $(basename ${file_basename} .tar.gz) && ./configure && make && sudo make install
         rm -rf ${file_basename} $(basename ${file_basename} .tar.gz)
+    elif [[ ${file_basename} == *.appimage ]]; then
+        chmod u+x ${file_basename}
+	sudo mv ${file_basename} /usr/bin/$(basename ${file_basename} .appimage)
     else
         echo "Extension not recognized, skipping..."
     fi
@@ -43,8 +46,7 @@ function install_universal_tags() {
 }
 
 
-# commented out until v0.5 is released
-#install_github_latest neovim/neovim nvim-linux64.tar.gz
+install_github_latest neovim/neovim 'nvim.appimage$'
 install_github_latest tmux/tmux tmux-.*.tar.gz
 install_github_latest sharkdp/fd fd_.*amd64.deb
 install_github_latest sharkdp/bat bat_.*amd64.deb

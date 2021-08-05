@@ -1,0 +1,57 @@
+export DOTFILES=${0:a:h:h}
+
+# Path to your oh-my-zsh installation.
+export ZSH="/home/${USER}/.oh-my-zsh"
+
+# how often to auto-update (in days).
+export UPDATE_ZSH_DAYS=30
+
+#  case-sensitive completion.
+CASE_SENSITIVE="true"
+
+source $ZSH/oh-my-zsh.sh
+
+# fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# venv aliases
+source ~/.scripts/venv_aliases.sh
+
+# set prompt
+source ~/.scripts/prompt.sh
+
+# unlimited history
+    HISTSIZE=10000000
+HISTFILESIZE=10000000
+
+#git aliases
+function g() {
+    if [[ $# > 0 ]]; then
+        # if there are arguments, send them to git
+        git $@
+    else
+        # otherwise, run git status
+        git status
+    fi
+}
+for al in `git config --get-regexp alias | cut -d"." -f2 | cut -d" " -f1`; do
+    alias g$al="git $al"
+done
+
+# Base16 Shell
+BASE16_SHELL="$HOME/.config/base16-shell/"
+[ -n "$PS1" ] && \
+    [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
+        eval "$("$BASE16_SHELL/profile_helper.sh")"
+base16_bright
+
+# fasd
+fasd_cache="$HOME/.fasd-init-bash"
+if [ "$(command -v fasd)" -nt "$fasd_cache" -o ! -s "$fasd_cache" ]; then
+  fasd --init posix-alias zsh-hook zsh-ccomp zsh-ccomp-install >| "$fasd_cache"
+fi
+source "$fasd_cache"
+unset fasd_cache
+
+source ${DOTFILES}/env/aliases.sh
+source ${DOTFILES}/env/zinit_plugins.sh

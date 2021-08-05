@@ -320,7 +320,7 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 let g:tagbar_use_cache = 0
 
 " === codefmt ===
-Glaive codefmt yapf_executable=`$HOME .'/.venv/cheetah/bin/yapf'`
+Glaive codefmt yapf_executable=`$HOME .'/.venv/nvim/bin/yapf'`
 
 " === vim-airline ===
 let g:airline_powerline_fonts = 1
