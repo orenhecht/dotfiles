@@ -5,7 +5,7 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 sudo apt install -y install ninja-build gettext libtool libtool-bin \
     autoconf automake cmake g++ pkg-config unzip curl libevent-dev ncurses-dev bash-completion htop software-properties-common \
-    snapd
+    zsh
 
 # install apps
 sudo apt install -y fasd
@@ -25,7 +25,6 @@ cd ${HOME}/.ctags.d && rm -rf  ${HOME}/.ctags.d/conf.ctags && ln -s ${SCRIPT_DIR
 cd ${HOME} && rm -f  .gitconfig &&  ln -s ${SCRIPT_DIR}/gitconfig .gitconfig
 cd ${HOME} && rm -rf .scripts && ln -s ${SCRIPT_DIR}/scripts .scripts
 cd ${HOME} && rm -f  .tmux.conf && ln -s ${SCRIPT_DIR}/tmux.conf .tmux.conf
-cd ${HOME} && rm -f  .pylintrc && ln -s ${SCRIPT_DIR}/pylintrc .pylintrc
 
 # install fonts
 git clone https://github.com/powerline/fonts.git
@@ -46,9 +45,12 @@ python3 -m venv ${HOME}/.venv/nvim && source "${HOME}/.venv/nvim/bin/activate" &
 # install all nvim plugins
 nvim --headless +PlugInstall +qall
 
-source ${SCRIPT_DIR}/bash_profile
+#TODO
+# switch to zsh, install oh my zsh, source zshrc
+# set theme as base_bright
+#source ${SCRIPT_DIR}/zshrc
 
 
 echo "============================================="
-#echo "NOW INSTALL yapf pylint jedi ON THE MAIN VENV"
+echo "NOW INSTALL yapf ON THE MAIN VENV"
 echo "============================================="
