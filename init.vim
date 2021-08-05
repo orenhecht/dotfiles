@@ -1,4 +1,3 @@
-" Inspired by https://github.com/odedlaz/dotfiles
 let g:python3_host_prog = $HOME .'/.venv/nvim/bin/python'
 let g:mapleader = ","
 
@@ -94,15 +93,11 @@ cnoreabbrev bda BufOnly
 " Save
 inoremap <C-s>     <C-O>:update<cr>
 nnoremap <C-s>     :update<cr>
-nnoremap <leader>s :update<cr>
-nnoremap <leader>w :update<cr>
 
 " Quit
 inoremap <C-Q>     <esc>:q<cr>
 nnoremap <C-Q>     :q<cr>
 vnoremap <C-Q>     <esc>
-nnoremap <Leader>q :q<cr>
-nnoremap <Leader>Q :qa!<cr>
 
 nnoremap <c-f> :CtrlSF<Space>
 nmap <leader>f <Plug>CtrlSFCwordPath
@@ -120,6 +115,7 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
+" deselect with esc
 nnoremap <silent><esc> :noh<CR>
 
 " edit/reload init.vim file
@@ -132,10 +128,10 @@ nnoremap <leader>nt :NERDTreeFind<cr>
 nmap <Leader>c gcc
 
 " Fugitive
-nmap <leader>ge :Gedit<cr>
-nmap <silent><leader>gr :Gread<cr>
-nmap <silent><leader>gb :Gblame<cr>
-nmap <leader>gs :Gstatus<CR><C-w>20-
+nmap <leader>ge :G edit<cr>
+nmap <silent><leader>gr :G read<cr>
+nmap <silent><leader>gb :G blame<cr>
+nmap <leader>gs :G status<CR><C-w>20-
 
 " Textmate style indentation
 vmap <leader>[ <gv
@@ -301,11 +297,11 @@ set shortmess+=c
 
 " ================ Plugins Config ================
 
+" === base16-vim ===
 if filereadable(expand("~/.vimrc_background"))
   let base16colorspace=256
   source ~/.vimrc_background
 endif
-
 
 " === ultisnips ===
 " c-j c-k for moving in snippet
@@ -323,8 +319,8 @@ autocmd VimEnter * nested :call tagbar#autoopen(1)
 " disable cache for snap universal tags
 let g:tagbar_use_cache = 0
 
+" === codefmt ===
 Glaive codefmt yapf_executable=`$HOME .'/.venv/cheetah/bin/yapf'`
-
 
 " === vim-airline ===
 let g:airline_powerline_fonts = 1
@@ -361,16 +357,23 @@ let g:loaded_netrwPlugin=1
 "thus making NERDTree respect gitignore!
 let g:NERDTreeRespectWildIgnore=1
 
+" === ctrl-sf ===
 let g:ctrlsf_mapping = {
-	\ "next": "n",
-	\ "prev": "N",
-	\ }
+    \ "next": "n",
+    \ "prev": "N",
+    \ }
 
 let g:ctrlsf_extra_backend_args = {
-    \ 'rg': '--no-ignore --hidden --follow --glob "!.git/*"'
+    \ 'rg': '--no-ignore --hidden --follow --glob "!.git/*" --glob "!tags"'
     \ }
 
 let g:ctrlsf_default_root = 'project+fw'
 
+" === editorconfig ===
 " editoconfig fugitive conflict
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
+
+" === gutentags ===
+" Ignore git temp files that casued error on exit
+" https://github.com/ludovicchabant/vim-gutentags/issues/178
+let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']
