@@ -9,7 +9,8 @@ zinit wait lucid light-mode for \
       OMZ::plugins/command-not-found/command-not-found.plugin.zsh \
   atload"_zsh_autosuggest_start" zsh-users/zsh-autosuggestions \
   as"completion" \
-      OMZ::plugins/docker/_docker
+      OMZ::plugins/docker/_docker \
+      OMZ::plugins/docker-compose/_docker-compose
 
 # Recommended Be Loaded Last.
 zinit ice wait blockf lucid atpull'zinit creinstall -q .'

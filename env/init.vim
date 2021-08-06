@@ -374,6 +374,7 @@ let g:ctrlsf_default_root = 'project+fw'
 let g:EditorConfig_exclude_patterns = ['fugitive://.*']
 
 " === gutentags ===
+let g:gutentags_ctags_tagfile = ".tags"
 " Ignore git temp files that casued error on exit
 " https://github.com/ludovicchabant/vim-gutentags/issues/178
 let g:gutentags_exclude_filetypes = ['gitcommit', 'gitconfig', 'gitrebase', 'gitsendemail', 'git']

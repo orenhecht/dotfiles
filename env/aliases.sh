@@ -11,8 +11,8 @@ alias vim="nvim"
 alias vi="nvim"
 alias oldvim="\vim"
 
-alias cdg="cd ~/projects/github"
-alias cdd="cd ~/projects/github/dotfiles"
+alias cdp="cd ~/projects"
+alias cdd="cd ~/projects/dotfiles"
 
 alias cat='bat'
 alias run-ssh-agent='eval $(ssh-agent -s) ; ssh-add ~/.ssh/id_ed25519'

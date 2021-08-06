@@ -1,3 +1,4 @@
+export PATH=~/.local/bin:$PATH
 export DOTFILES=${0:a:h:h}
 
 # Path to your oh-my-zsh installation.
